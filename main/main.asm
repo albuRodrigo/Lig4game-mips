@@ -10,7 +10,7 @@ jogador: .asciiz "\n Jogador, esecolha uma coluna!\n"
 
 
 
-la $a0, matriz #----Salvo endereÁo da matriz
+la $a0, matriz #----Salvo endere√ßo da matriz
 
 li $s0, 0x00FF0000 #--vermelho
 
@@ -18,7 +18,7 @@ li $s1, 0x00000000 #--preto
 
 li $s2, 0xFFFFFFFF #--- branco
 
-li $a1, 0x10010000#---endereÁo tela mars
+li $a1, 0x10010000#---endere√ßo tela mars
 
 li $a3,0
 
@@ -35,13 +35,15 @@ li $v0,5
 syscall
 move $a2,$v0
 
+addi $a2,$a2,-1
+
 bgt $a2,7,acabou
 
 
-la $a0, matriz #----Salvo endereÁo da matriz 
-la $a0, matriz #----Salvo endereÁo da matriz
+la $a0, matriz #----Salvo endere√ßo da matriz 
 
-jal func„o_local_disponivel
+
+jal func√£o_local_disponivel
 
 
 
@@ -52,40 +54,40 @@ j inicio_main
 
 #---pintar um quadrado-----
 
-func„o_local_disponivel: #---procurar o 0(zero) mais baixo
+func√£o_local_disponivel: #---procurar o 0(zero) mais baixo
 #---- $a1 ----- tela mars
-#---- $a2 ----- È a coluna que o usuairo que colocar
-#---- $a3 ----- È par ou impar, pra ver quem È o jogador
-#---- $a0 ----- È a matriz, pro calculo base
+#---- $a2 ----- √© a coluna que o usuairo que colocar
+#---- $a3 ----- √© par ou impar, pra ver quem √© o jogador
+#---- $a0 ----- √© a matriz, pro calculo base
 li $t1, 7 #--ultima linha
 
 
 
 procura:
-#-------------- achar endereÁo
+#-------------- achar endere√ßo
 mul $t2, $t1,8
 add $t2,$t2,$a2
 mul $t2,$t2,4
 add $t2,$t2, $a0
 #--------------
-lw $t3,0($t2) #----salvo em $t3 o valor correspondete ao espaÁo 
+lw $t3,0($t2) #----salvo em $t3 o valor correspondete ao espa√ßo 
 
 beq $t3,$zero,prencher #---- se tiver vazio
 addi $t1,$t1,-1 #---subo uma coluna
 bltz  $t1,acabou  #---se a coluna ta toda cheia
-j procura#--se n„o prencheu nem acabou eu continuo procurando
+j procura#--se n√£o prencheu nem acabou eu continuo procurando
 
 prencher:
 #------------ calcular resto se par = jogador 1, se impar jogador 2
 rem $t5,$a3,2 
 #-------------
 
-#-----------procurar endereÁo correspondete ao do bitmap
+#-----------procurar endere√ßo correspondete ao do bitmap
 
 #---------------
 
-sub $t4,$t2,$a0 # salvo em $t4, a diiferenÁa do valor base da matriz e do encontrado
-add $t4,$t4,$a1 # $t4, tem a diferenÁa mas o valor do bitmap
+sub $t4,$t2,$a0 # salvo em $t4, a diiferen√ßa do valor base da matriz e do encontrado
+add $t4,$t4,$a1 # $t4, tem a diferen√ßa mas o valor do bitmap
 
 
 beq $t5,0,par
